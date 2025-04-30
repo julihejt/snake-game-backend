@@ -21,9 +21,10 @@ router.post("/highscores", async (req, res) => {
 
 // Get all scores for the logged-in user
 router.get("/my-scores", auth, async (req, res) => {
+  console.log(`fetch my scores`, req.user.id);
   try {
     const scores = await Score.find({ user: req.user.id }).sort({ value: -1 });
-    res.json(scores);
+    return res.json(scores);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
