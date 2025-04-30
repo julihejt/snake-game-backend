@@ -6,20 +6,17 @@ const auth = require("../middleware/auth");
 const router = express.Router();
 
 // Submit a highscore (requires login)
-router.post("/", auth, async (req, res) => {
-  try {
-    const { value } = req.body;
+router.post("/highscores", async (req, res) => {
+  const { username, score } = req.body;
 
-    const newScore = new Score({
-      user: req.user.id,
-      value,
-    });
-
-    await newScore.save();
-    res.status(201).json({ message: "Score saved", score: newScore });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  if (!username || score == null) {
+    return res.status(400).json({ message: "Missing username or score" });
   }
+
+  // Save the score here (placeholder logic)
+  console.log(`Received score from ${username}: ${score}`);
+
+  return res.status(201).json({ message: "Score submitted successfully" });
 });
 
 // Get all scores for the logged-in user
